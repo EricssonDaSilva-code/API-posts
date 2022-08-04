@@ -1,6 +1,8 @@
 package com.ericsson.APIposts.resources;
 
 import com.ericsson.APIposts.domain.User;
+import com.ericsson.APIposts.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +16,11 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UserResource {
 
+    @Autowired
+    private UserService service;
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
-        User maria = new User("1", "Maria Silva", "maria@gmail.com");
-        User alex = new User("2", "Alex Silva", "alex@gmail.com");
-        List<User> list = new ArrayList<>();
-        list.addAll(Arrays.asList(maria, alex));
+        List<User> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 }
